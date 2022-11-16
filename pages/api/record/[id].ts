@@ -1,6 +1,7 @@
 import nextConnect from "next-connect";
 import { NextApiResponse } from "next";
 import Record from "../../../models/recordModel";
+import {server} from "../../../config"
 import init from "../../../middlewares/init";
 import auth from "../../../middlewares/auth";
 import { NextApiReq } from "../../../interface";
@@ -15,7 +16,7 @@ handler
 
     const { attendanceId, participantId, participantFullName } = req.body;
 
-    await fetch(`http://localhost:3000/api/attendance/${attendanceId}`, {
+    await fetch(`${server}/api/attendance/${attendanceId}`, {
       headers: {
         "Content-Type": "application/json",
       },
