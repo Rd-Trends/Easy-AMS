@@ -16,6 +16,7 @@ const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
 interface formData {
   email: string;
   password: string | number;
+  customError?: string;
 }
 
 const schema = yup
@@ -40,7 +41,7 @@ const Login = () => {
     if (user) {
       router.push("/dashboard");
     }
-  }, [user]);
+  }, [user, router]);
 
   const {
     register,
@@ -51,7 +52,7 @@ const Login = () => {
   } = useForm<formData>({ resolver: yupResolver(schema) });
 
   const handleLogin = handleSubmit(async (data) => {
-    clearErrors("customerror");
+    clearErrors("customError");
     const response = await fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify(data),

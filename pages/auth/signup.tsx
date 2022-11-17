@@ -16,6 +16,7 @@ interface formData {
   fullName: string;
   email: string;
   password: string | number;
+  customError?: string;
 }
 
 const schema = yup
@@ -43,7 +44,7 @@ const SignUp = () => {
   } = useForm<formData>({ resolver: yupResolver(schema) });
 
   const handleSignUp = handleSubmit(async (data) => {
-    clearErrors("customerror");
+    clearErrors("customError");
     const response = await fetch("/api/auth/signup", {
       method: "POST",
       body: JSON.stringify(data),
@@ -54,7 +55,7 @@ const SignUp = () => {
 
     if (response.status === 201) {
       const user = await response.json();
-      router.push("/dashboard")
+      router.push("/dashboard");
     }
     if (response.status >= 400) {
       const err = await response.json();

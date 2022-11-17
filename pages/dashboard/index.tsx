@@ -13,7 +13,7 @@ const PrivatRoute = dynamic(() => import("../../components/PrivatRoute"), {
   ssr: false,
 });
 
-const index = () => {
+const Dashboard = () => {
   const [showCreateAttendance, setShowCreateAttendance] =
     useState<Boolean>(false);
 
@@ -78,4 +78,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Dashboard;
