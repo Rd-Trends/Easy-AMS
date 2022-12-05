@@ -20,7 +20,8 @@ const DashboardSideBar = ({
   }, [isSideBarOpen]);
 
   const onBlured = (event: React.FocusEvent<HTMLElement>): void => {
-    if (!event.currentTarget.contains(event.relatedTarget)) {
+    if (!event.currentTarget.contains(event.relatedTarget) && isSideBarOpen) {
+      console.log("yes");
       toggleSideBar();
     }
   };
@@ -30,14 +31,12 @@ const DashboardSideBar = ({
       <div
         className={`h-screen w-screen fixed top-0 left-0 bg-black  opacity-50 ${
           isSideBarOpen ? "block" : "hidden"
-        } lg:hidden`}
+        } lg:hidden z-50`}
       ></div>
       <nav
-        className={` bg-element-bg dark:bg-dark-element-bg ${
-          styles.fontColor
-        } py-8 px-8 fixed lg:sticky top-0 left-0 ${
+        className={` bg-element-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color py-8 px-8 fixed lg:sticky top-0 left-0 ${
           isSideBarOpen ? "translate-x-[0%]" : "translate-x-[-100%]"
-        } lg:translate-x-[0%] transition-transform duration-300 text w-[80%] min-w-[300px] max-w-[100%] md:max-w-sm lg:w-3/12 h-screen md:block`}
+        } lg:translate-x-[0%] transition-transform duration-300 text w-[80%] min-w-[300px] max-w-[100%] md:max-w-sm lg:w-3/12 h-screen md:block z-50`}
         ref={sideBarRef}
         onBlur={onBlured}
         tabIndex={0}
@@ -49,16 +48,9 @@ const DashboardSideBar = ({
             Tools
           </span>
           <div>
-            <Link href="/dashboard/records" className="flex items-center mb-4">
+            <Link href="/dashboard" className="flex items-center mb-4">
               <FaRegAddressBook size={25} />
               <span className="ml-8">Attendance</span>
-            </Link>
-            <Link
-              href="/dashboard/new-attendance"
-              className="flex items-center mb-4"
-            >
-              <BiBookAdd size={25} />
-              <span className="ml-8 capitalize">Create Attendance</span>
             </Link>
             <Link
               href="/dashboard/sign-attendance"

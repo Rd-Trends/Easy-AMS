@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useUser from "../../hooks/useUser";
 import * as yup from "yup";
+import Button from "../../components/Button";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
   ssr: false,
@@ -34,6 +36,8 @@ const schema = yup
 
 const Login = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { user, mutate } = useUser();
 
@@ -52,6 +56,7 @@ const Login = () => {
   } = useForm<formData>({ resolver: yupResolver(schema) });
 
   const handleLogin = handleSubmit(async (data) => {
+    setLoading(true);
     clearErrors("customError");
     const response = await fetch("/api/auth/login", {
       method: "POST",
@@ -63,13 +68,13 @@ const Login = () => {
 
     if (response.status === 200) {
       const user = await response.json();
+      setLoading(false);
       mutate(user);
       router.push("/dashboard");
     }
     if (response.status === 401) {
       const err = await response.json();
-      console.log(err);
-
+      setLoading(false);
       setError("customError", { type: "custom", message: err.message });
     }
   });
@@ -87,30 +92,42 @@ const Login = () => {
               <input
                 type="email"
                 placeholder="johnDoe@gmail.com"
-                className="block mt-1 border-2 dark:border-gray-700 w-full outline-primary py-2 px-4 rounded-md bg-transparent"
+                className="block mt-1 border-2 dark:border-gray-700 w-full outline-none hover:border-primary dark:hover:border-primary py-2 px-4 rounded-md bg-transparent"
                 {...register("email")}
               />
             </label>
             {errors?.email && (
               <p className=" -mt-2 mb-2 text-red-500">{errors.email.message}</p>
             )}
-            <label className=" block mb-4">
+            <label htmlFor="password" className=" block">
               password
+            </label>
+            <div className="mt-1 border-2 dark:border-gray-700 hover:border-primary dark:hover:border-primary flex items-center rounded-md">
               <input
-                type="password"
-                placeholder="************"
-                className="block mt-1 border-2  dark:border-gray-700 w-full outline-primary py-2 px-4 rounded-md bg-transparent"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="********"
+                className="block border-none w-full outline-none py-2 px-4 rounded-md bg-transparent"
                 {...register("password")}
               />
-            </label>
+              <button
+                className="mr-4 outline-none bg-transparent h-full py-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowPassword(!showPassword);
+                }}
+              >
+                {showPassword ? <BsEyeSlash /> : <BsEye />}
+              </button>
+            </div>
             {errors?.password && (
               <p className=" -mt-2 mb-2 text-red-500">
                 {errors.password.message}
               </p>
             )}
-            <button className="px-4 py-2 rounded-md bg-primary block w-full text-white mt-8">
+            <Button loading={loading} width="full" className="mt-8">
               Sign in
-            </button>
+            </Button>
             {errors?.customError && (
               <p className=" mt-2 text-red-500">
                 {errors?.customError?.message}

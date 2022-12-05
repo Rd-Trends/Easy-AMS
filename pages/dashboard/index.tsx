@@ -8,6 +8,10 @@ import { styles } from "../../constants/style";
 import useUser from "../../hooks/useUser";
 import CreateAttendance from "../../components/CreateAttendance";
 import { AnimatePresence } from "framer-motion";
+import useSWR from "swr";
+import axios from "axios";
+import { attendance } from "../../interface";
+import Button from "../../components/Button";
 
 const PrivatRoute = dynamic(() => import("../../components/PrivatRoute"), {
   ssr: false,
@@ -16,63 +20,96 @@ const PrivatRoute = dynamic(() => import("../../components/PrivatRoute"), {
 const Dashboard = () => {
   const [showCreateAttendance, setShowCreateAttendance] =
     useState<Boolean>(false);
+  const [attendances, setAttendances] = useState<attendance[]>([]);
+
+  const { user } = useUser();
+
+  const { data, error } = useSWR<attendance[]>("/api/attendance");
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+
+      setAttendances(data);
+    }
+  }, [data]);
 
   const hideCreateAttendance = () => {
     setShowCreateAttendance(false);
   };
+
+  const createNewAttendance = async (title: string, description: string) => {
+    const response = await axios.post("/api/attendance", {
+      title,
+      description,
+    });
+
+    if (response.data) {
+      console.log(response.data);
+
+      setAttendances((prevAttendances) => [...prevAttendances, response.data]);
+      setShowCreateAttendance(false);
+    }
+  };
+
+  if (!data && !error) {
+    return <></>;
+  }
+
   return (
     <PrivatRoute>
       <DashboardLayout>
-        <AnimatePresence initial={false} exitBeforeEnter={true}>
+        <AnimatePresence initial={false} mode="wait">
           {showCreateAttendance && (
-            <CreateAttendance hideCreateAttendance={hideCreateAttendance} />
+            <CreateAttendance
+              hideCreateAttendance={hideCreateAttendance}
+              createNewAttendance={createNewAttendance}
+            />
           )}
         </AnimatePresence>
-        <div className=" flex items-center justify-between">
-          <h1 className={` text-4xl mt-12 mb-8 ${styles.fontColor}`}>
-            Your Attendance
-          </h1>
+        {attendances.length ? (
+          <div>
+            <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mt-12 mb-8 gap-4">
+              <h1 className={` text-4xl ${styles.fontColor}`}>
+                Your Attendance
+              </h1>
 
-          <button
-            onClick={() => setShowCreateAttendance(true)}
-            className=" flex items-center outline-none bg-primary text-white py-4 px-8 text-base rounded-lg"
-          >
-            <AiOutlinePlus size={20} />
-            <span className="ml-2"> New Attendance</span>
-          </button>
-        </div>
-        <div className=" grid grid-cols-3 gap-8">
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-          <AttendanceCard />
-        </div>
+              <Button onClick={() => setShowCreateAttendance(true)} size="md">
+                <AiOutlinePlus size={20} />
+                <span className="ml-2"> New Attendance</span>
+              </Button>
+            </div>
+            <div className=" grid grid-cols-1 md:grid-cols-3 gap-8">
+              {attendances.length &&
+                attendances.map((attendance, index) => (
+                  <AttendanceCard
+                    key={attendance._id}
+                    title={attendance.title}
+                    description={attendance.description}
+                    numberOfRecords={attendance.numberOfRecords}
+                    numberOfParticipants={attendance.numberOfParticipants}
+                    _id={attendance._id}
+                  />
+                ))}
+            </div>
+          </div>
+        ) : (
+          <div className=" flex flex-col items-center mx-auto w-full justify-between mt-[6rem] mb-8 gap-4">
+            <h1
+              className={` text-4xl font-light text-center ${styles.fontColor}`}
+            >
+              You haven't created any attendance yet
+            </h1>
+
+            <button
+              onClick={() => setShowCreateAttendance(true)}
+              className=" flex items-center outline-none bg-primary text-white py-4 px-8 text-base rounded-lg"
+            >
+              <AiOutlinePlus size={20} />
+              <span className="ml-2">Create New Attendance</span>
+            </button>
+          </div>
+        )}
       </DashboardLayout>
     </PrivatRoute>
   );

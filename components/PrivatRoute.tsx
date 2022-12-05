@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import useUser from "../hooks/useUser";
+import Loader from "./Loader"
 
 interface props {
   children: React.ReactNode;
@@ -17,8 +18,10 @@ const PrivatRoute = ({ children }: props) => {
   }, [user, loading, router]);
 
   if (loading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
+
+  
 
   return <> {user && children}</>;
 };

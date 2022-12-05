@@ -21,3 +21,29 @@ a {
     border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   font-family: "Nunito Sans", sans-serif;
 }
+
+@layer components {
+  .spinner {
+    @apply my-6 mx-auto w-[60px] h-[60px] relative block border-4 rounded-full border-t-primary border-x-element-bg dark:border-x-dark-element-bg dark:border-b-white border-b-dark-element-bg animate-spin;
+  }
+  .spinner::before,
+  .spinner::after {
+    @apply content-none top-0 left-0 absolute border-[12px] border-transparent border-b-dark-element-bg dark:border-b-white -translate-x-3 translate-y-10 -rotate-45;
+  }
+  .spinner::after {
+    @apply translate-x-9 translate-y-1 rotate-45;
+  }
+
+  .loader {
+    @apply h-[60px] w-[60px] relative flex items-center;
+  }
+
+  .loader::before,
+  .loader::after {
+    @apply top-0 left-0 absolute content-[""]  h-[60px] w-[60px] rounded-full bg-primary animate-loader;
+  }
+
+  .loader::after {
+    @apply animate-[loader_2s_infinite];
+  }
+}

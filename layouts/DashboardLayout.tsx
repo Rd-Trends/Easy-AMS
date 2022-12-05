@@ -17,17 +17,19 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [isSideBarOpen, setIsSidebarOpen] = useState<Boolean>(false);
 
   const toggleSideBar = () => {
-    setIsSidebarOpen((prevValue) => !prevValue);
+    setIsSidebarOpen(!isSideBarOpen);
   };
 
   return (
     <PageWrapper>
-      <div className={`bg-body-bg dark:bg-dark-body-bg flex flex-row gap-4`}>
+      <div
+        className={`bg-body-bg dark:bg-dark-body-bg w-full h-full min-h-screen flex flex-row`}
+      >
         <DashboardSideBar
           isSideBarOpen={isSideBarOpen}
           toggleSideBar={toggleSideBar}
         />
-        <div className=" w-screen lg:w-9/12 px-4">
+        <div className="h-full w-screen lg:w-[70%] xl:w-9/12 px-4">
           <DashboardNavBar
             isSideBarOpen={isSideBarOpen}
             toggleSideBar={toggleSideBar}

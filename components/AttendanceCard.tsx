@@ -1,15 +1,37 @@
 import React from "react";
+import Link from "next/link";
 import { styles } from "../constants/style";
+import { attendance } from "../interface";
+import { BsPeopleFill, BsListOl } from "react-icons/bs";
+import { FaListOl } from "react-icons/fa";
+import { MdDescription } from "react-icons/md";
 
-const AttendanceCard = () => {
+const AttendanceCard = ({
+  title,
+  description,
+  numberOfRecords,
+  numberOfParticipants,
+  _id,
+}: attendance) => {
   return (
-    <div
-      className={` ${styles.elementBg} ${styles.fontColor} p-4 rounded-lg shadow-2xl shadow-[rgba(100,100,111,0.2)] max-w-xs `}
+    <Link
+      href={`/dashboard/attendance/${_id}`}
+      className={` ${styles.elementBg} ${styles.fontColor} p-4 rounded-lg shadow-2xl shadow-[rgba(100,100,111,0.2)] max-w-[100%] w-[320px] mx-auto md:mx-0`}
     >
-      <h3 className=" font-bold mb-4">MEE 301</h3>
-      <p className=" mb-2">0 attendace taken</p>
-      <p>56 participants</p>
-    </div>
+      <h3 className="text-lg font-semibold mb-3">{title}</h3>
+      <div className="flex items-start gap-3 mb-2">
+        <MdDescription size={25} className=" text-primary " />
+        <p>{description}</p>
+      </div>
+      <div className="flex items-center gap-3 mb-2">
+        <FaListOl className=" text-primary " />
+        <p>{numberOfRecords} records taken</p>
+      </div>
+      <div className="flex items-center gap-3">
+        <BsPeopleFill className=" text-primary" />{" "}
+        <p>{numberOfParticipants} participants</p>
+      </div>
+    </Link>
   );
 };
 

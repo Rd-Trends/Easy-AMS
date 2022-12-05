@@ -3,7 +3,26 @@ import { NextApiRequest } from "next";
 export interface user {
   fullName: string;
   email: string;
-  id: string;
+  image?: string;
+  _id: string;
+}
+
+export interface record {
+  _id: string;
+  recordId: string;
+  title: string;
+  participants?: Map<string, string>;
+  active: Boolean;
+}
+
+export interface attendance {
+  title: string;
+  description: string;
+  _id: string;
+  numberOfParticipants?: number;
+  numberOfRecords?: number;
+  records?: record[];
+  participants?: user[];
 }
 
 export interface NextApiReq extends NextApiRequest {

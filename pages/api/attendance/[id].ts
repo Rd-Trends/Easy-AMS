@@ -13,45 +13,46 @@ handler
   .use(auth)
   .get(async (req: NextApiReq, res: NextApiResponse) => {
     try {
-      const { id } = req.query;
-      const attendance = await Attendance.findById(id)
-        .populate("participants", "fullName email")
-        .populate("records", "title participants status", Record);
-
-      return res.status(200).json(attendance);
+      const { id: attendanceId } = req.query;
+      const attendance = await Attendance.findById(attendanceId).populate(
+        "participants",
+        "fullName email"
+      );
+      const { _id: id, title, description, participants } = attendance;
+      const records = await Record.find({ attendanceId: id });
+      return res.status(200).json({
+        id,
+        participants,
+        title,
+        description,
+        records,
+      });
     } catch (err) {
       return res.status(500).send("an error occured");
     }
   })
   .patch(async (req: NextApiReq, res: NextApiResponse) => {
     const { id } = req.query;
- 
-    const { recordId, participantId } = req.body;
-    if (recordId) {
-      await Attendance.findByIdAndUpdate(
-        id,
-        { $push: { records: recordId } },
-        { new: true }
-      );
+    const { participantId } = req.body;
+
+    const attendance = await Attendance.findById(id);
+
+    if (attendance.participants.includes(participantId)) {
+      return;
+    } else {
+      attendance.participants.push(participantId);
+      await attendance.save();
+      return;
     }
-
-    if (participantId) {
-      console.log(participantId);
-
-      await Attendance.findByIdAndUpdate(
-        id,
-        { $push: { participants: participantId } },
-        { new: true }
-      );
-      // ).exec(function (err, attendace) {
-      //   if (err) {
-      //     console.log(err);
-      //     res.status(500).send(err);
-      //   } else {
-      //     console.log(attendace);
-      //     // res.status(200).json(record);
-      //   }
-      // });
+  })
+  .delete(async (req: NextApiReq, res: NextApiResponse) => {
+    try {
+      const { id } = req.query;
+      await Record.deleteMany({ attendanceId: id });
+      await Attendance.deleteOne({ _id: id });
+      res.status(200).end()
+    } catch (err) {
+      res.status(500).send("An error occured");
     }
   });
 

@@ -12,10 +12,6 @@ const ThemeContext = createContext<themeContextInterface | null>(null);
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [theme, setTheme] = useLocalStorage("theme", "");
 
-  useEffect(() => {
-    console.log(theme);
-  }, []);
-
   const switchTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);

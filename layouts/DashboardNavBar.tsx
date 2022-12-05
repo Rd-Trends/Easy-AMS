@@ -29,18 +29,31 @@ const DashboardNavBar = ({ isSideBarOpen, toggleSideBar }: SidebarProps) => {
     }
   };
 
+  const fancyDisplayedName = (name: string) => {
+    return name
+      .split(" ")
+      .map((word) => {
+        return word[0];
+      })
+      .join("");
+  };
+
   return (
     <nav
       className={` flex flex-row justify-between w-full items-center my-4 p-4 rounded-md shadow-2xl shadow-[rgba(100,100,111,0.09)] bg-element-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color `}
     >
       <div className="flex items-center gap-4">
-        <Image
-          src="/test.jpg"
-          alt=""
-          width={40}
-          height={40}
-          className=" h-10 w-10 rounded-full"
-        />
+        {user?.image ? (
+          <img src={user.image} alt="" className=" h-10 w-10 rounded-full" />
+        ) : (
+          <>
+            {user && (
+              <span className=" h-10 w-10 rounded-full flex items-center justify-center text-white bg-blue-400">
+                {fancyDisplayedName(user.fullName)}
+              </span>
+            )}
+          </>
+        )}
         <p className=" capitalize text-base font-bold">{user?.fullName}</p>
       </div>
       <div className="flex items-center gap-4 relative">
@@ -57,8 +70,10 @@ const DashboardNavBar = ({ isSideBarOpen, toggleSideBar }: SidebarProps) => {
           Sign Out
         </button>
         <button
-          className=" outline-none bg-transparent z-10 lg:hidden"
-          onClick={toggleSideBar}
+          className=" outline-none ml-4 bg-transparent lg:hidden"
+          onClick={() => {
+            toggleSideBar();
+          }}
         >
           <FaBars size={25} />
         </button>

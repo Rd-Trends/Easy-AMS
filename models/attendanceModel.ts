@@ -1,15 +1,14 @@
 import { Schema, model, models, Types } from "mongoose";
 
 interface IAttendance {
-  user: Types.ObjectId;
+  owner: Types.ObjectId;
   title: string;
   participants?: Types.ObjectId[];
   description: string;
-  records?: Types.ObjectId[];
 }
 
 const attendanceSchema = new Schema<IAttendance>({
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  owner: { type: Schema.Types.ObjectId, ref: "User" },
   title: {
     type: String,
     required: [true, "Please enter the title od this attendace"],
@@ -19,7 +18,6 @@ const attendanceSchema = new Schema<IAttendance>({
     required: [true, "Please enter a brief a description of this attendace"],
   },
   participants: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  records: [{ type: Schema.Types.ObjectId, ref: "Record" }],
 });
 
 const Attendance =

@@ -7,7 +7,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
     <div
       className={`App ${
         theme == "dark" ? "dark" : ""
-      } transition-all ease-in-out duration-1000 bg min-w-full  min-h-screen h-full`}
+      } transition-all ease-in-out duration-1000 bg w-full min-h-screen h-full`}
     >
       {children}
     </div>

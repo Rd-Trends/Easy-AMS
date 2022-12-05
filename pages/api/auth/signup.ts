@@ -37,10 +37,11 @@ handler.post(async (req: NextApiReq, res: NextApiResponse, next) => {
     fullName,
     email: normalizeEmail(email),
     password: hashedPassword,
+    image: "",
   });
 
   await user.save();
-  req.login({ fullName, email, id: user._id }, (err) => {
+  req.login({ fullName, email, _id: user._id, image: user.image }, (err) => {
     if (err) return next(err);
     return res.status(201).json(req.user);
   });

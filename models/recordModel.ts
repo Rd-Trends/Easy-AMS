@@ -3,7 +3,9 @@ import { Schema, model, models, Types } from "mongoose";
 interface IRecord {
   title: string;
   participants?: Map<string, string>;
-  status: Boolean,
+  active: Boolean;
+  attendanceId: Types.ObjectId;
+  recordId: string;
 }
 
 const recordSchema = new Schema<IRecord>({
@@ -12,10 +14,11 @@ const recordSchema = new Schema<IRecord>({
     required: [true, "Please enter the title od this attendace"],
   },
   participants: { type: Map, of: String },
-  status: {type: Boolean, default: true}
+  active: { type: Boolean, default: true },
+  attendanceId: { type: Schema.Types.ObjectId },
+  recordId: { type: String },
 });
 
-const Record =
-  models.Record || model<IRecord>("Record", recordSchema);
+const Record = models.Record || model<IRecord>("Record", recordSchema);
 
 export default Record;
