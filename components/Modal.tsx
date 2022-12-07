@@ -12,7 +12,7 @@ interface modalProp {
 const Modal = ({ children, size = "sm", closeModal }: modalProp) => {
   const dropIn = {
     hidden: {
-      y: "-20vh",
+      y: "-20px",
       opacity: 0,
     },
     visible: {
@@ -21,12 +21,12 @@ const Modal = ({ children, size = "sm", closeModal }: modalProp) => {
       transition: {
         duration: 0.3,
         type: "spring",
-        damping: 25,
+        damping: 40,
         stiffness: 500,
       },
     },
     exit: {
-      y: "20vh",
+      y: "20px",
       opacity: 0,
     },
   };

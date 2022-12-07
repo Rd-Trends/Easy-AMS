@@ -10,7 +10,16 @@ interface themeContextInterface {
 const ThemeContext = createContext<themeContextInterface | null>(null);
 
 const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useLocalStorage("theme", "");
+  const [theme, setTheme] = useLocalStorage<string>("theme", "");
+
+  useEffect(() => {
+    const defaultTheme = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    if (!theme) {
+      setTheme(defaultTheme ? "dark" : "white");
+    }
+  }, []);
 
   const switchTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";

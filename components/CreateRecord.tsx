@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./Button";
 import Modal from "./Modal";
 
 const CreateRecord = ({
@@ -8,8 +9,8 @@ const CreateRecord = ({
   hideCreateRecord: () => void;
   createNewRecord: (title: string) => void;
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [isProcessing, setisProcessing] = useState<boolean>(false);
 
   return (
     <Modal size="md" closeModal={hideCreateRecord}>
@@ -17,6 +18,7 @@ const CreateRecord = ({
         <h2 className="mb-4 text-xl font-bold">Create Record</h2>
         <form
           onSubmit={(e) => {
+            setisProcessing(true);
             e.preventDefault();
             createNewRecord(title);
           }}
@@ -27,16 +29,16 @@ const CreateRecord = ({
             <input
               type="text"
               placeholder="week 1"
-              className="block mt-1 border-2 dark:border-gray-700 w-full outline-primary py-2 px-4 rounded-md bg-transparent"
+              className="block mt-1 border-2 dark:border-gray-700 w-full outline-none hover:border-primary dark:hover:border-primary py-2 px-4 rounded-md bg-transparent"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               // {...register("email")}
             />
           </label>
 
-          <button className="px-4 py-2 rounded-md bg-primary block w-full text-white mt-8">
+          <Button className="w-full mt-8" loading={isProcessing}>
             Create Record
-          </button>
+          </Button>
         </form>
       </div>
     </Modal>

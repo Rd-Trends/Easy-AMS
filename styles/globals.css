@@ -46,4 +46,11 @@ a {
   .loader::after {
     @apply animate-[loader_2s_infinite];
   }
+  .section__title {
+    @apply text-3xl md:text-4xl relative mx-auto font-bold;
+  }
+
+  .section__title::after {
+    @apply content-[""] absolute w-[70%] h-[2px] md:h-[4px] -bottom-2 md:-bottom-3 right-0 bg-primary;
+  }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "./Button";
 import Modal from "./Modal";
 
 const CreateAttendance = ({
@@ -8,8 +9,9 @@ const CreateAttendance = ({
   hideCreateAttendance: () => void;
   createNewAttendance: (title: string, description: string) => void;
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [isProcessing, setisProcessing] = useState<boolean>(false);
 
   return (
     <Modal size="md" closeModal={hideCreateAttendance}>
@@ -18,6 +20,7 @@ const CreateAttendance = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
+            setisProcessing(true);
             createNewAttendance(title, description);
           }}
           className=" w-full font-extralight"
@@ -27,7 +30,7 @@ const CreateAttendance = ({
             <input
               type="text"
               placeholder="Attendance title"
-              className="block mt-1 border-2 dark:border-gray-700 w-full outline-primary py-2 px-4 rounded-md bg-transparent"
+              className="block mt-1 border-2 dark:border-gray-700 w-full outline-none hover:border-primary dark:hover:border-primary py-2 px-4 rounded-md bg-transparent"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               // {...register("email")}
@@ -37,15 +40,15 @@ const CreateAttendance = ({
             Description
             <textarea
               placeholder="a brief description about the attendance"
-              className="block mt-1 border-2 dark:border-gray-700 w-full outline-primary py-2 px-4 rounded-md bg-transparent"
+              className="block mt-1 border-2 dark:border-gray-700 w-full outline-none hover:border-primary dark:hover:border-primary py-2 px-4 rounded-md bg-transparent"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               // {...register("email")}
             />
           </label>
-          <button className="px-4 py-2 rounded-md bg-primary block w-full text-white mt-8">
+          <Button className="w-full" loading={isProcessing}>
             Create attendance
-          </button>
+          </Button>
         </form>
       </div>
     </Modal>

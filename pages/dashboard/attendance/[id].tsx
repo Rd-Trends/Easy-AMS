@@ -216,10 +216,10 @@ const AttendancePage = () => {
           </div>
 
           <div className=" flex flex-col md:flex-row justify-between gap-4 md:items-center">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <p>show</p>
               <input
-                className=" border-none py-3 pl-4 rounded-sm outline-none bg-body-bg dark:bg-dark-body-bg"
+                className=" border-none py-3 pl-4 rounded-sm outline-none bg-body-bg dark:bg-dark-body-bg w-full"
                 type="number"
                 value={itemsPerTable.toString()}
                 onChange={(e) => setItemsPerTable(Number(e.target.value))}
@@ -292,9 +292,15 @@ const AttendancePage = () => {
                         );
                       })}
                       <td className="whitespace-nowrap p-2">
-                        {`${participantsAttendancePercentage.get(
-                          participant.fullName
-                        )} %`}
+                        {`${
+                          participantsAttendancePercentage.get(
+                            participant.fullName
+                          )
+                            ? participantsAttendancePercentage.get(
+                                participant.fullName
+                              )
+                            : 0
+                        } %`}
                       </td>
                     </tr>
                   ))

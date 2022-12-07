@@ -1,7 +1,5 @@
 import nextConnect from "next-connect";
 import { NextApiResponse } from "next";
-import Attendance from "../../../models/attendanceModel";
-import { server } from "../../../config";
 import init from "../../../middlewares/init";
 import auth from "../../../middlewares/auth";
 import { NextApiReq } from "../../../interface";
@@ -15,8 +13,10 @@ handler
   .use(auth)
   .post(async (req: NextApiReq, res: NextApiResponse) => {
     try {
-      const recordId = crypto.randomBytes(5).toString("hex");
       const { title, attendanceId } = req.body;
+      const recordId = `${title.replace(" ", "")}-${new Date()
+        .toISOString()
+        .replace(/[.\-:]/g, "")}`;
       console.log(recordId);
 
       const record = new Record({

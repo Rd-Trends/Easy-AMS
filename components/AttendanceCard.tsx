@@ -16,7 +16,7 @@ const AttendanceCard = ({
   return (
     <Link
       href={`/dashboard/attendance/${_id}`}
-      className={` ${styles.elementBg} ${styles.fontColor} p-4 rounded-lg shadow-2xl shadow-[rgba(100,100,111,0.2)] max-w-[100%] w-[320px] mx-auto md:mx-0`}
+      className={` ${styles.elementBg} ${styles.fontColor} p-4 rounded-lg shadow-2xl max-w-[100%] w-[320px] mx-auto md:mx-0`}
     >
       <h3 className="text-lg font-semibold mb-3">{title}</h3>
       <div className="flex items-start gap-3 mb-2">
