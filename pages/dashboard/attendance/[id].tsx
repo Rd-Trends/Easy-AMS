@@ -221,8 +221,12 @@ const AttendancePage = () => {
               <input
                 className=" border-none py-3 pl-4 rounded-sm outline-none bg-body-bg dark:bg-dark-body-bg w-full"
                 type="number"
-                value={itemsPerTable.toString()}
-                onChange={(e) => setItemsPerTable(Number(e.target.value))}
+                defaultValue={itemsPerTable}
+                onChange={(e) => {
+                  if (Number(e.target.value) > 0) {
+                    setItemsPerTable(Number(e.target.value));
+                  }
+                }}
               />
               <p>entries</p>
             </div>
