@@ -67,11 +67,11 @@ const DashboardSideBar = ({
             Others
           </span>
           <div>
-            <Link href="/dashboard/records" className="flex items-center mb-4">
+            <Link href="/dashboard/help" className="flex items-center mb-4">
               <FiHelpCircle size={25} />
               <span className="ml-8">Help</span>
             </Link>
-            <Link href="/dashboard/records" className="flex items-center">
+            <Link href="/dashboard/#" className="flex items-center">
               <FiEdit size={25} />
               <span className="ml-8">FAQ</span>
             </Link>
