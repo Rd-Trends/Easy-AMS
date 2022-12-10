@@ -42,7 +42,7 @@ const DashboardNavBar = ({ isSideBarOpen, toggleSideBar }: SidebarProps) => {
     <nav
       className={` flex flex-row justify-between w-full items-center my-4 p-4 rounded-md shadow-2xl shadow-[rgba(100,100,111,0.09)] bg-element-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color `}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex items-center space-x-4">
         {user?.image ? (
           <img src={user.image} alt="" className=" h-10 w-10 rounded-full" />
         ) : (
@@ -56,7 +56,7 @@ const DashboardNavBar = ({ isSideBarOpen, toggleSideBar }: SidebarProps) => {
         )}
         <p className=" capitalize text-base font-bold">{user?.fullName}</p>
       </div>
-      <div className="flex items-center gap-4 relative">
+      <div className="flex items-center space-x-4 relative">
         <button
           onClick={switchTheme}
           className="flex items-center outline-none bg-transparent font-light "

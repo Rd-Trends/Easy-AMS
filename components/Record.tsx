@@ -55,12 +55,12 @@ const Record = ({
     <th
       data-v={record.title}
       key={record._id}
-      className=" px-4 whitespace-nowrap py-4 "
+      className=" px-4 whitespace-nowrap py-4 h-full"
       scope="col"
     >
       <p className="mb-1 text-center">{record.title}</p>
       {!hideOnExport && (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center space-x-2">
           <Button
             onClick={() => setShowTakeAttendance(true)}
             disabled={!record.active ? true : false}
@@ -139,7 +139,7 @@ const Record = ({
                 Are you sure want to delete <em>{record.title}</em> record?
               </p>
               <p>This process is irreversible and cannot be undone</p>
-              <div className="flex items-center justify-end gap-4 pt-2">
+              <div className="flex items-center justify-end space-x-4 pt-2">
                 <Button
                   onClick={() => setshowDeleteRecordModal(false)}
                   color="secondary"

@@ -32,7 +32,7 @@ const DeleteAttendance = ({ deleteAttendance }: props) => {
                 Are you sure want to delete this attendance
               </p>
               <p>This process is irreversible and cannot be undone</p>
-              <div className="flex items-center justify-end gap-4 pt-2">
+              <div className="flex items-center justify-end space-x-4 pt-2">
                 <Button
                   onClick={() => setShowDeleteAttendanceModal(false)}
                   color="secondary"

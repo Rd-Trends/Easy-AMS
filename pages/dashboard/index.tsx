@@ -69,7 +69,7 @@ const Dashboard = () => {
         </AnimatePresence>
         {attendances.length ? (
           <div>
-            <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mt-12 mb-8 gap-4">
+            <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mt-12 mb-8 space-y-4  md:space-y-0 md:gap-4">
               <h1 className={` text-4xl ${styles.fontColor}`}>
                 Your Attendance
               </h1>
@@ -94,7 +94,7 @@ const Dashboard = () => {
             </div>
           </div>
         ) : (
-          <div className=" flex flex-col items-center mx-auto w-full justify-between mt-[6rem] mb-8 gap-4">
+          <div className=" flex flex-col items-center mx-auto w-full justify-between mt-[6rem] mb-8 space-y-4 md:space-y-0 gap-4">
             <h1
               className={` text-4xl font-light text-center ${styles.fontColor}`}
             >

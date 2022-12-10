@@ -11,7 +11,7 @@ const Hero = () => {
         Avoid those distracting queues and take accurate attendance of everyone
         present in seconds!
       </p>
-      <div className="flex gap-4 items-center mt-8">
+      <div className="flex space-x-4 items-center mt-8">
         <Link
           href="/auth/login"
           className="py-2 w-[150px] max-w-full text-center border-2 border-primary bg-primary rounded-md text-white hover:opacity-70 font-bold text-lg"

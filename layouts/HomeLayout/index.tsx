@@ -33,7 +33,7 @@ const HomeLayout = ({ children }: props) => {
               </li>
               <li>
                 <Link
-                  href="/#Features"
+                  href="/#features"
                   className="py-2 px-2 border-b-4 border-transparent hover:border-b-primary"
                 >
                   Faatures

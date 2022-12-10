@@ -43,7 +43,7 @@ const SignAttendance = () => {
     if (response.status === 200) {
       setMessage({
         type: "success",
-        message: "Attendamce signed successfully",
+        message: "Attendance signed successfully",
       });
       setLoading(false);
     }

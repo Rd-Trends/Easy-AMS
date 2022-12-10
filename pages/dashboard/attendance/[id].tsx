@@ -200,9 +200,9 @@ const AttendancePage = () => {
         </AnimatePresence>
 
         <div className="block px-4 py-8 shadow-2xl bg-element-bg  dark:bg-dark-element-bg rounded-lg text-font-color dark:text-dark-font-color">
-          <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mb-8 space-y-4 md:space-y-0 md:gap-4">
             <h1 className={` text-2xl`}>{attendance?.title}</h1>
-            <div className=" flex items-center gap-4">
+            <div className=" flex items-center space-x-4">
               <ExportTableData
                 setHideOnExport={setHideOnExport}
                 title={attendance?.title}
@@ -215,8 +215,8 @@ const AttendancePage = () => {
             </div>
           </div>
 
-          <div className=" flex flex-col md:flex-row justify-between gap-4 md:items-center">
-            <div className="flex items-center gap-2 ">
+          <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:gap-4 md:items-center">
+            <div className="flex items-center space-x-2">
               <p>show</p>
               <input
                 className=" border-none py-3 pl-4 rounded-sm outline-none bg-body-bg dark:bg-dark-body-bg w-full"
@@ -245,7 +245,7 @@ const AttendancePage = () => {
           <div className="w-full min-h-full overflow-x-auto pt-6">
             <table
               ref={tableRef}
-              className=" table-auto border-collapse w-full border-b-2 dark:border-gray-600"
+              className=" table-auto border-collapse w-full min-h-[150px] border-b-2 dark:border-gray-600"
             >
               <thead className=" border-b-2 dark:border-gray-600">
                 <tr className=" [&>th]:min-w-[200px] w-full [&>th]:text-left ">
@@ -310,19 +310,30 @@ const AttendancePage = () => {
               </tbody>
             </table>
           </div>
-          <div className=" flex flex-col md:flex-row md:items-center md:justify-between py-10 gap-4">
-            {tablePaginationInfo && (
+          <div className=" flex flex-col md:flex-row md:items-center md:justify-between py-10 space-y-4 md:space-y-0 md:gap-4">
+            {!participants.length ? (
+              <p className=" mx-auto text-center">No participant added yet</p>
+            ) : (
+              <></>
+            )}
+            {tablePaginationInfo && participants.length ? (
               <p className=" w-full font-bold min-w-fit">
                 {tablePaginationInfo}
               </p>
+            ) : (
+              <></>
             )}
-            <Pagination
-              participants={participants}
-              itemsPerTable={itemsPerTable}
-              tableNumber={tableNumber}
-              setTableNumber={setTableNumber}
-              setTableOffset={setTableOffset}
-            />
+            {participants.length ? (
+              <Pagination
+                participants={participants}
+                itemsPerTable={itemsPerTable}
+                tableNumber={tableNumber}
+                setTableNumber={setTableNumber}
+                setTableOffset={setTableOffset}
+              />
+            ) : (
+              <></>
+            )}
           </div>
           <DeleteAttendance deleteAttendance={deleteAttendace} />
         </div>
