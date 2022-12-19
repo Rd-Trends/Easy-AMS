@@ -2,6 +2,7 @@ import { Schema, model, models, Types } from "mongoose";
 
 interface IAttendance {
   owner: Types.ObjectId;
+  ownerLocation?: { latitude: number; longitude: number };
   title: string;
   participants?: Types.ObjectId[];
   description: string;
@@ -9,6 +10,10 @@ interface IAttendance {
 
 const attendanceSchema = new Schema<IAttendance>({
   owner: { type: Schema.Types.ObjectId, ref: "User" },
+  ownerLocation: {
+    latitude: { type: Schema.Types.Number },
+    longitude: { type: Schema.Types.Number },
+  },
   title: {
     type: String,
     required: [true, "Please enter the title od this attendace"],

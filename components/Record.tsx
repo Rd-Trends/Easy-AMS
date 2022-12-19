@@ -60,7 +60,7 @@ const Record = ({
     >
       <p className="mb-1 text-center">{record.title}</p>
       {!hideOnExport && (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center justify-center space-x-2 w-full">
           <Button
             onClick={() => setShowTakeAttendance(true)}
             disabled={!record.active ? true : false}

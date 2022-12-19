@@ -252,9 +252,10 @@ const AttendancePage = () => {
               className=" table-auto border-collapse w-full min-h-[150px] border-b-2 dark:border-gray-600"
             >
               <thead className=" border-b-2 dark:border-gray-600">
-                <tr className=" [&>th]:min-w-[200px] w-full [&>th]:text-left ">
-                  <th className=" px-4 whitespace-nowrap py-4">Name</th>
-                  <th className=" px-4 whitespace-nowrap py-4">email</th>
+                <tr className=" w-full [&>th]:text-left ">
+                  <th className="px-4 w-8 whitespace-nowrap py-4">S/N</th>
+                  <th className=" px-4 whitespace-nowrap py-4 ">Name</th>
+                  <th className=" px-4 whitespace-nowrap py-4 ">email</th>
                   {records.length ? (
                     records.map((record, index) => (
                       <Record
@@ -276,10 +277,13 @@ const AttendancePage = () => {
                 {participantsPerTable.length ? (
                   participantsPerTable.map((participant, index) => (
                     <tr key={participant._id}>
-                      <td className="whitespace-nowrap p-2 px-4">
+                      <td className="whitespace-nowrap py-3 px-4">
+                        {index + 1}
+                      </td>
+                      <td className="whitespace-nowrap py-3 px-4">
                         {participant.fullName}
                       </td>
-                      <td className="whitespace-nowrap p-3 px-4">
+                      <td className="whitespace-nowrap py-3 px-4">
                         {participant.email}
                       </td>
 

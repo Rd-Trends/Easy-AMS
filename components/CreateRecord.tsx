@@ -32,6 +32,7 @@ const CreateRecord = ({
               className="block mt-1 border-2 dark:border-gray-700 w-full outline-none hover:border-primary dark:hover:border-primary py-2 px-4 rounded-md bg-transparent"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              autoFocus
               // {...register("email")}
             />
           </label>

@@ -28,8 +28,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
-
       setAttendances(data);
     }
   }, [data]);
