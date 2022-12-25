@@ -12,6 +12,7 @@ import Button from "../../components/Button";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import useURL from "../../hooks/useURL";
 import Seo from "../../components/Seo";
+import Meta from "../../layouts/Meta";
 
 const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
   ssr: false,
@@ -83,6 +84,7 @@ const Login = () => {
 
   return (
     <PageWrapper>
+      <Meta />
       <Seo
         url={url}
         seo={{

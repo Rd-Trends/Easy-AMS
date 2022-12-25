@@ -3,6 +3,7 @@ import DashboardSideBar from "./DashboardSideBar";
 import { useState } from "react";
 import DashboardNavBar from "./DashboardNavBar";
 import dynamic from "next/dynamic";
+import Meta from "./Meta";
 
 const PageWrapper = dynamic(() => import("../components/PageWrapper"), {
   ssr: false,
@@ -22,6 +23,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <PageWrapper>
+      <Meta />
       <div
         className={`bg-body-bg dark:bg-dark-body-bg w-full h-full min-h-screen flex flex-row`}
       >

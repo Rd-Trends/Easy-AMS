@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import Logo from "../../components/Logo";
 import { BsMoon, BsSun } from "react-icons/bs";
 import { useThemeContext } from "../../context/themeContext";
+import Meta from "../Meta";
 
 const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
   ssr: false,
@@ -18,6 +19,7 @@ const HomeLayout = ({ children }: props) => {
 
   return (
     <PageWrapper>
+      <Meta />
       <div className="w-full h-full min-h-screen bg-body-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color">
         <nav className=" flex items-center justify-between w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-4 md:py-8">
           <Logo />
