@@ -14,8 +14,9 @@ import Seo from "../components/Seo";
 export default function Home() {
   const url = useURL();
   return (
+    <> <Seo url={url} />
     <HomeLayout>
-      <Seo url={url} />
+     
       <Hero />
       <section
         className=" flex flex-col justify-center w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 space-y-8 md:pb-20 lg:pb-0"
@@ -104,5 +105,6 @@ export default function Home() {
         </div>
       </section>
     </HomeLayout>
+    </>
   );
 }

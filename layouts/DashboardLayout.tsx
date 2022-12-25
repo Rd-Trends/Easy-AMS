@@ -22,25 +22,27 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <PageWrapper>
+    <>
       <Meta />
-      <div
-        className={`bg-body-bg dark:bg-dark-body-bg w-full h-full min-h-screen flex flex-row`}
-      >
-        <DashboardSideBar
-          isSideBarOpen={isSideBarOpen}
-          toggleSideBar={toggleSideBar}
-        />
-        <div className="h-full w-screen lg:w-[70%] xl:w-9/12 px-4">
-          <DashboardNavBar
+      <PageWrapper>
+        <div
+          className={`bg-body-bg dark:bg-dark-body-bg w-full h-full min-h-screen flex flex-row`}
+        >
+          <DashboardSideBar
             isSideBarOpen={isSideBarOpen}
             toggleSideBar={toggleSideBar}
           />
+          <div className="h-full w-screen lg:w-[70%] xl:w-9/12 px-4">
+            <DashboardNavBar
+              isSideBarOpen={isSideBarOpen}
+              toggleSideBar={toggleSideBar}
+            />
 
-          {children}
+            {children}
+          </div>
         </div>
-      </div>
-    </PageWrapper>
+      </PageWrapper>
+    </>
   );
 };
 

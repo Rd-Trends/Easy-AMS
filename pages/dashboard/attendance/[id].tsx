@@ -90,7 +90,8 @@ const AttendancePage = () => {
   };
 
   return (
-    <PrivatRoute>
+    <>
+      {" "}
       <Seo
         url={url}
         seo={{
@@ -101,106 +102,108 @@ const AttendancePage = () => {
         noindex={true}
         nofollow={true}
       />
-      <DashboardLayout>
-        <div className="block px-4 py-8 shadow-2xl bg-element-bg  dark:bg-dark-element-bg rounded-lg text-font-color dark:text-dark-font-color">
-          <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mb-8 space-y-4 md:space-y-0 md:gap-4">
-            <h1 className={` text-2xl`}>{attendance?.title}</h1>
-            <div className=" flex items-center space-x-4">
-              <ExportTableData
-                setHideOnExport={setHideOnExport}
-                title={attendance?.title}
-                tableRef={tableRef.current}
-              />
-              <CreateRecord attendanceId={`${attendanceId}`} />
+      <PrivatRoute>
+        <DashboardLayout>
+          <div className="block px-4 py-8 shadow-2xl bg-element-bg  dark:bg-dark-element-bg rounded-lg text-font-color dark:text-dark-font-color">
+            <div className=" flex flex-col items-start md:flex-row md:items-center justify-between mb-8 space-y-4 md:space-y-0 md:gap-4">
+              <h1 className={` text-2xl`}>{attendance?.title}</h1>
+              <div className=" flex items-center space-x-4">
+                <ExportTableData
+                  setHideOnExport={setHideOnExport}
+                  title={attendance?.title}
+                  tableRef={tableRef.current}
+                />
+                <CreateRecord attendanceId={`${attendanceId}`} />
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:gap-4 md:items-center">
-            <TableEntryControl
-              itemsPerTable={itemsPerTable}
-              setItemsPerTable={setItemsPerTable}
-            />
-            <SearchAttendanceTable participants={attendance?.participants!} />
-          </div>
+            <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:gap-4 md:items-center">
+              <TableEntryControl
+                itemsPerTable={itemsPerTable}
+                setItemsPerTable={setItemsPerTable}
+              />
+              <SearchAttendanceTable participants={attendance?.participants!} />
+            </div>
 
-          <div className="w-full min-h-full overflow-x-auto pt-6">
-            <table
-              ref={tableRef}
-              className=" table-auto border-collapse w-full min-h-[150px] border-b-2 dark:border-gray-600"
-            >
-              <thead className=" border-b-2 dark:border-gray-600">
-                <tr className=" w-full [&>th]:text-left ">
-                  <th className="px-4 w-8 whitespace-nowrap py-4">S/N</th>
-                  <th className=" px-4 whitespace-nowrap py-4 ">Name</th>
-                  <th className=" px-4 whitespace-nowrap py-4 ">email</th>
-                  {records.length ? (
-                    records.map((record, index) => (
-                      <Record
-                        key={record._id}
-                        record={record}
-                        hideOnExport={hideOnExport}
-                      />
+            <div className="w-full min-h-full overflow-x-auto pt-6">
+              <table
+                ref={tableRef}
+                className=" table-auto border-collapse w-full min-h-[150px] border-b-2 dark:border-gray-600"
+              >
+                <thead className=" border-b-2 dark:border-gray-600">
+                  <tr className=" w-full [&>th]:text-left ">
+                    <th className="px-4 w-8 whitespace-nowrap py-4">S/N</th>
+                    <th className=" px-4 whitespace-nowrap py-4 ">Name</th>
+                    <th className=" px-4 whitespace-nowrap py-4 ">email</th>
+                    {records.length ? (
+                      records.map((record, index) => (
+                        <Record
+                          key={record._id}
+                          record={record}
+                          hideOnExport={hideOnExport}
+                        />
+                      ))
+                    ) : (
+                      <></>
+                    )}
+                    <th>Percentage</th>
+                  </tr>
+                </thead>
+                <tbody className=" [&>tr:nth-child(odd)]:bg-body-bg [&>tr:nth-child(odd)]:dark:bg-dark-body-bg">
+                  {participants.length ? (
+                    participants.map((participant, index) => (
+                      <tr key={participant._id}>
+                        <td className="whitespace-nowrap py-3 px-4">
+                          {index + 1}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-4">
+                          {participant.fullName}
+                        </td>
+                        <td className="whitespace-nowrap py-3 px-4">
+                          {participant.email}
+                        </td>
+
+                        {records.map((record) => {
+                          return (
+                            <td
+                              key={record._id + participant._id}
+                              className="whitespace-nowrap p-2 px-4 text-center"
+                            >
+                              {record.participants?.has(participant.fullName)
+                                ? record.participants.get(participant.fullName)
+                                : "absent"}
+                            </td>
+                          );
+                        })}
+                        <td className="whitespace-nowrap p-2">
+                          {`${
+                            calculateParticipantAttendancePercentage.get(
+                              participant.fullName
+                            )
+                              ? calculateParticipantAttendancePercentage.get(
+                                  participant.fullName
+                                )
+                              : 0
+                          } %`}
+                        </td>
+                      </tr>
                     ))
                   ) : (
                     <></>
                   )}
-                  <th>Percentage</th>
-                </tr>
-              </thead>
-              <tbody className=" [&>tr:nth-child(odd)]:bg-body-bg [&>tr:nth-child(odd)]:dark:bg-dark-body-bg">
-                {participants.length ? (
-                  participants.map((participant, index) => (
-                    <tr key={participant._id}>
-                      <td className="whitespace-nowrap py-3 px-4">
-                        {index + 1}
-                      </td>
-                      <td className="whitespace-nowrap py-3 px-4">
-                        {participant.fullName}
-                      </td>
-                      <td className="whitespace-nowrap py-3 px-4">
-                        {participant.email}
-                      </td>
-
-                      {records.map((record) => {
-                        return (
-                          <td
-                            key={record._id + participant._id}
-                            className="whitespace-nowrap p-2 px-4 text-center"
-                          >
-                            {record.participants?.has(participant.fullName)
-                              ? record.participants.get(participant.fullName)
-                              : "absent"}
-                          </td>
-                        );
-                      })}
-                      <td className="whitespace-nowrap p-2">
-                        {`${
-                          calculateParticipantAttendancePercentage.get(
-                            participant.fullName
-                          )
-                            ? calculateParticipantAttendancePercentage.get(
-                                participant.fullName
-                              )
-                            : 0
-                        } %`}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <></>
-                )}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
+            {allParticipants.length ? (
+              <Pagination itemsPerTable={itemsPerTable} />
+            ) : (
+              <></>
+            )}
+            <DeleteAttendance deleteAttendance={deleteAttendace} />
           </div>
-          {allParticipants.length ? (
-            <Pagination itemsPerTable={itemsPerTable} />
-          ) : (
-            <></>
-          )}
-          <DeleteAttendance deleteAttendance={deleteAttendace} />
-        </div>
-      </DashboardLayout>
-    </PrivatRoute>
+        </DashboardLayout>
+      </PrivatRoute>
+    </>
   );
 };
 
