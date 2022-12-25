@@ -31,7 +31,9 @@ const Seo = ({
         description: metaDesc,
         images: [
           {
-            url: ogImage ?? "/easy-ams-og.png",
+            url: ogImage
+              ? `https://easy-ams.vercel.app/${ogImage}`
+              : "https://easy-ams.vercel.app/easy-ams-og.png",
             width: 1280,
             height: 720,
             alt: "Og Image Alt",
