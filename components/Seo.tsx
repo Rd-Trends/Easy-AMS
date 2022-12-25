@@ -35,7 +35,7 @@ const Seo = ({
               ? `https://easy-ams.vercel.app/${ogImage}`
               : "https://easy-ams.vercel.app/easy-ams-og.png",
             width: 1280,
-            height: 720,
+            height: 566,
             alt: "Og Image Alt",
           },
         ],
