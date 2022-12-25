@@ -10,6 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Button from "../../components/Button";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import Seo from "../../components/Seo";
+import useURL from "../../hooks/useURL";
 
 const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
   ssr: false,
@@ -39,7 +41,7 @@ const SignUp = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  const url = useURL();
   const { user } = useUser();
 
   useEffect(() => {
@@ -81,6 +83,16 @@ const SignUp = () => {
 
   return (
     <PageWrapper>
+      <Seo
+        url={url}
+        seo={{
+          title: "Sign Up - Easy-AMS",
+          metaDesc: "Create your Easy-AMS account",
+          metaKeywords:
+            "Easy-AMS signup, create Easy-AMS account, register Easy-Ams",
+        }}
+        ogImage="/login-og.png"
+      />
       <div className="bg-body-bg dark:bg-dark-body-bg min-h-screen flex items-center justify-center py-12">
         <div className="bg-element-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color shadow-xl w-11/12 md:w-5/12 lg:w-4/12 max-w-[400px] flex flex-col items-center py-8 px-4 rounded-lg font-extralight">
           <Logo />

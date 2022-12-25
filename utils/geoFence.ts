@@ -1,19 +1,31 @@
-interface geoFenceOption {
+interface geoFenceOptions {
   name: string;
   latitude: number;
   longitude: number;
 }
 
-interface circularGeoFenceOption extends geoFenceOption {
+interface circularGeoFenceOptions extends geoFenceOptions {
   radius: number; // meters
 }
 
+interface squareGeofenceOptions extends geoFenceOptions {
+  axis: number; //meters
+}
+
 export class CircularGeofenceRegion {
-  constructor(opts: circularGeoFenceOption) {
-    Object.assign(this, opts);
+  name: string;
+  latitude: number;
+  longitude: number;
+  radius: number;
+
+  constructor(options: circularGeoFenceOptions) {
+    this.name = options.name;
+    this.latitude = options.latitude;
+    this.longitude = options.longitude;
+    this.radius = options.radius;
   }
 
-  inside(lat2, lon2) {
+  inside(lat2: number, lon2: number) {
     const lat1 = this.latitude;
     const lon1 = this.longitude;
     const R = 63710; // Earth's radius in m
@@ -30,8 +42,16 @@ export class CircularGeofenceRegion {
 }
 
 export class SquareGeofenceRegion {
-  constructor(opts: ) {
-    Object.assign(this, opts);
+  name: string;
+  latitude: number;
+  longitude: number;
+  axis: number;
+
+  constructor(options: squareGeofenceOptions) {
+    this.name = options.name;
+    this.latitude = options.latitude;
+    this.longitude = options.longitude;
+    this.axis = options.axis;
   }
 
   inside(lat: number, lon: number) {

@@ -23,6 +23,7 @@ export interface attendance {
   numberOfRecords?: number;
   records?: record[];
   participants?: user[];
+  ownerLocation?: { longitude: number; latitude: number };
 }
 
 export interface NextApiReq extends NextApiRequest {

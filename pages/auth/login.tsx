@@ -10,6 +10,8 @@ import useUser from "../../hooks/useUser";
 import * as yup from "yup";
 import Button from "../../components/Button";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import useURL from "../../hooks/useURL";
+import Seo from "../../components/Seo";
 
 const PageWrapper = dynamic(() => import("../../components/PageWrapper"), {
   ssr: false,
@@ -38,7 +40,7 @@ const Login = () => {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-
+  const url = useURL();
   const { user, mutate } = useUser();
 
   useEffect(() => {
@@ -81,6 +83,15 @@ const Login = () => {
 
   return (
     <PageWrapper>
+      <Seo
+        url={url}
+        seo={{
+          title: "Sign In - Easy-AMS",
+          metaDesc: "Sign into your Easy-AMS account",
+          metaKeywords: "Easy-AMS signin, login Easy-AMS",
+        }}
+        ogImage="/login-og.png"
+      />
       <div className="bg-body-bg dark:bg-dark-body-bg min-h-screen flex items-center justify-center py-12">
         <div className="bg-element-bg dark:bg-dark-element-bg text-font-color dark:text-dark-font-color shadow-xl w-11/12 md:w-5/12 lg:w-4/12 max-w-[400px] flex flex-col items-center py-8 px-4 rounded-lg font-extralight">
           <Logo />

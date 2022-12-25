@@ -18,7 +18,13 @@ handler
         "participants",
         "fullName email"
       );
-      const { _id: id, title, description, participants } = attendance;
+      const {
+        _id: id,
+        title,
+        description,
+        participants,
+        ownerLocation,
+      } = attendance;
       const records = await Record.find({ attendanceId: id });
       return res.status(200).json({
         id,
@@ -26,6 +32,7 @@ handler
         title,
         description,
         records,
+        ownerLocation,
       });
     } catch (err) {
       return res.status(500).send("an error occured");
@@ -33,16 +40,24 @@ handler
   })
   .patch(async (req: NextApiReq, res: NextApiResponse) => {
     const { id } = req.query;
-    const { participantId } = req.body;
+    const { participantId, userLocation } = req.body;
 
     const attendance = await Attendance.findById(id);
 
-    if (attendance.participants.includes(participantId)) {
-      return;
-    } else {
-      attendance.participants.push(participantId);
+    if (participantId) {
+      if (attendance.participants.includes(participantId)) {
+        return;
+      } else {
+        attendance.participants.push(participantId);
+        await attendance.save();
+        return;
+      }
+    }
+    if (userLocation) {
+      console.log(userLocation);
+      attendance.ownerLocation = userLocation;
       await attendance.save();
-      return;
+      return res.status(200).end();
     }
   })
   .delete(async (req: NextApiReq, res: NextApiResponse) => {
@@ -50,7 +65,7 @@ handler
       const { id } = req.query;
       await Record.deleteMany({ attendanceId: id });
       await Attendance.deleteOne({ _id: id });
-      res.status(200).end()
+      res.status(200).end();
     } catch (err) {
       res.status(500).send("An error occured");
     }

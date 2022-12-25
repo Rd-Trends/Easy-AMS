@@ -7,6 +7,9 @@ import Button from "../../components/Button";
 import useUser from "../../hooks/useUser";
 import axios from "axios";
 import { BiCheckCircle } from "react-icons/bi";
+import useLocation from "../../hooks/useLocation";
+import useURL from "../../hooks/useURL";
+import Seo from "../../components/Seo";
 
 const PrivatRoute = dynamic(() => import("../../components/PrivatRoute"), {
   ssr: false,
@@ -20,8 +23,9 @@ const SignAttendance = () => {
   } | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const { theme } = useThemeContext();
-
   const { user } = useUser();
+  const { longitude, latitude } = useLocation();
+  const url = useURL();
 
   const signAttendance = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -32,6 +36,7 @@ const SignAttendance = () => {
       {
         participantId: user?._id,
         participantFullName: user?.fullName,
+        participantLocation: { latitude, longitude },
       },
       {
         validateStatus: function (status) {
@@ -56,6 +61,16 @@ const SignAttendance = () => {
 
   return (
     <PrivatRoute>
+      <Seo
+        url={url}
+        seo={{
+          title: "Sign Attendance",
+          metaDesc: "Sign attendance easily and quickly using Easy-AMS",
+          metaKeywords: "Sign attendance using Easy-AMS, easy-AMS",
+        }}
+        noindex={true}
+        nofollow={true}
+      />
       <DashboardLayout>
         <div className="w-full md:w-7/12 mx-auto max-w-full h-full my-8 py-8 bg-element-bg dark:bg-dark-element-bg text-font-color shadow-lg rounded-lg dark:text-dark-font-color p-4">
           <h1 className=" text-3xl  text-center -mb-2 md:mb-8">

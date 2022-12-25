@@ -9,13 +9,11 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { IoCopyOutline } from "react-icons/io5";
 import { BsClipboardCheck } from "react-icons/bs";
 import { motion } from "framer-motion";
+import useAttendanceStore from "../store";
 
 interface props {
   record: record;
   hideOnExport: boolean;
-  toggleRecordStatus: (id: string, status: string) => void;
-  addParticipantsToRecord: (recordId: string, participant: user) => void;
-  deleteRecord: (recordId: string) => void;
 }
 
 const dropIn = {
@@ -35,18 +33,18 @@ const dropIn = {
   },
 };
 
-const Record = ({
-  record,
-  hideOnExport,
-  toggleRecordStatus,
-  addParticipantsToRecord,
-  deleteRecord,
-}: props) => {
+const Record = ({ hideOnExport, record }: props) => {
   const [showTakeAttendance, setShowTakeAttendance] = useState<Boolean>(false);
   const [showDeleteRecordModal, setshowDeleteRecordModal] =
     useState<Boolean>(false);
   const [share, setShare] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
+
+  const toggleRecordStatus = useAttendanceStore(
+    (store) => store.toggleRecordStatus
+  );
+
+  const deleteRecord = useAttendanceStore((store) => store.deleteRecord);
 
   const hideTakeAttendance = () => {
     setShowTakeAttendance(false);
@@ -164,7 +162,7 @@ const Record = ({
       <AnimatePresence initial={false} mode="wait">
         {showTakeAttendance && (
           <TakeAttendance
-            addParticipantsToRecord={addParticipantsToRecord}
+            // addParticipantsToRecord={addParticipantsToRecord}
             hideTakeAttendance={hideTakeAttendance}
             recordId={record._id}
           />

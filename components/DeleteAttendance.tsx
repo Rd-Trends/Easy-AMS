@@ -1,5 +1,5 @@
 import { AnimatePresence } from "framer-motion";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { TbTrashX } from "react-icons/tb";
 import Button from "./Button";
 import Modal from "./Modal";
@@ -58,4 +58,4 @@ const DeleteAttendance = ({ deleteAttendance }: props) => {
   );
 };
 
-export default DeleteAttendance;
+export default memo(DeleteAttendance);

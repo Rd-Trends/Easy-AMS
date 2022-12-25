@@ -5,29 +5,17 @@ import { IoThunderstormSharp } from "react-icons/io5";
 import { BsSpeedometer } from "react-icons/bs";
 import { FiDatabase } from "react-icons/fi";
 import { AiOutlineThunderbolt } from "react-icons/ai";
-import {
-  MdOutlinePersonAddDisabled,
-  MdPersonAddDisabled,
-} from "react-icons/md";
-import { useEffect, useState } from "react";
+import { MdOutlinePersonAddDisabled } from "react-icons/md";
 import Hero from "../components/Hero";
 import HomeLayout from "../layouts/HomeLayout";
-// import
+import useURL from "../hooks/useURL";
+import Seo from "../components/Seo";
 
 export default function Home() {
-  useEffect(() => {
-    console.log("hello bro".replace(" ", ""));
-  }, []);
-
+  const url = useURL();
   return (
     <HomeLayout>
-      <Head>
-        <title>Easy-AMS</title>
-        <meta
-          name="description"
-          content="Easy-AMS - Create, Take, Manage and Sign Attendance easily!"
-        />
-      </Head>
+      <Seo url={url} />
       <Hero />
       <section
         className=" flex flex-col justify-center w-11/12 md:w-10/12 lg:w-9/12 mx-auto py-8 space-y-8 md:pb-20 lg:pb-0"

@@ -1,5 +1,4 @@
-import React from "react";
-import Image from "next/image";
+import React, { memo } from "react";
 import { BsMoon, BsSun } from "react-icons/bs";
 
 import { FaBars } from "react-icons/fa";
@@ -82,4 +81,4 @@ const DashboardNavBar = ({ isSideBarOpen, toggleSideBar }: SidebarProps) => {
   );
 };
 
-export default DashboardNavBar;
+export default memo(DashboardNavBar);

@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import Link from "next/link";
 import Router from "next/router";
 import { useRef, useEffect } from "react";
@@ -21,15 +22,6 @@ const DashboardSideBar = ({
       sideBarRef?.current?.focus();
     }
   }, [isSideBarOpen]);
-
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position);
-      });
-    }
-  }, []);
 
   const onBlured = (event: React.FocusEvent<HTMLElement>): void => {
     if (!event.currentTarget.contains(event.relatedTarget) && isSideBarOpen) {
@@ -109,14 +101,14 @@ const DashboardSideBar = ({
           </div>
         </div>
 
-        <footer className=" justify-self-end">
+        <footer className="">
           <button onClick={logout} className="flex items-center md:hidden">
             <BiLogOutCircle size={25} />
             <span className="ml-8">Sign out</span>
           </button>
 
-          <div className=" text-center pt-12 px-4 text-xs">
-            <p> &copy; {new Date().getFullYear()} Easy-AMS</p>
+          <div className="pt-8 text-xs">
+            <p className="ml-6"> &copy; {new Date().getFullYear()} Easy-AMS</p>
             <p>
               Made with <span className="text-red-500">&#10084;</span> by Daniel
               Ikoyo
@@ -128,4 +120,4 @@ const DashboardSideBar = ({
   );
 };
 
-export default DashboardSideBar;
+export default memo(DashboardSideBar);

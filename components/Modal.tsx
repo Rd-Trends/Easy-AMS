@@ -32,11 +32,11 @@ const Modal = ({ children, size = "sm", closeModal }: modalProp) => {
   };
 
   const modalClassNames = classNames(
-    " bg-element-bg shadow-lg dark:bg-dark-element-bg z-10 rounded-md relative max-w-[90%] m-auto whitespace-pre-wrap",
+    " bg-element-bg shadow-lg dark:bg-dark-element-bg z-10 rounded-md relative max-w-[85%] m-auto whitespace-pre-wrap",
     {
       "w-[350px]": size === "sm",
-      "w-[500px]": size === "md",
-      "w-[700px]": size === "lg",
+      "w-[450px]": size === "md",
+      "w-[600px]": size === "lg",
     }
   );
   return (

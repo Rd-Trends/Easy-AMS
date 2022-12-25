@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import DashboardLayout from "../../layouts/DashboardLayout";
 import AttendanceCard from "../../components/AttendanceCard";
 import { AiOutlinePlus } from "react-icons/ai";
 import dynamic from "next/dynamic";
 import { styles } from "../../constants/style";
-import useUser from "../../hooks/useUser";
 import CreateAttendance from "../../components/CreateAttendance";
 import { AnimatePresence } from "framer-motion";
 import useSWR from "swr";
 import axios from "axios";
 import { attendance } from "../../interface";
 import Button from "../../components/Button";
+import useURL from "../../hooks/useURL";
+import Seo from "../../components/Seo";
 
 const PrivatRoute = dynamic(() => import("../../components/PrivatRoute"), {
   ssr: false,
@@ -22,7 +22,7 @@ const Dashboard = () => {
     useState<Boolean>(false);
   const [attendances, setAttendances] = useState<attendance[]>([]);
 
-  const { user } = useUser();
+  const url = useURL();
 
   const { data, error } = useSWR<attendance[]>("/api/attendance");
 
@@ -56,6 +56,14 @@ const Dashboard = () => {
 
   return (
     <PrivatRoute>
+      <Seo
+        url={url}
+        seo={{
+          title: "Easy-Ams - Dashboard",
+          metaDesc: "Cretae attendance using Easy-Mas",
+          metaKeywords: "",
+        }}
+      />
       <DashboardLayout>
         <AnimatePresence initial={false} mode="wait">
           {showCreateAttendance && (

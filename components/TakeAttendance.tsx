@@ -3,20 +3,20 @@ import Modal from "./Modal";
 import { QrReader } from "react-qr-reader";
 import { BiCheckCircle } from "react-icons/bi";
 import { user } from "../interface";
+import useAttendanceStore from "../store";
 
 interface props {
   hideTakeAttendance: () => void;
-  addParticipantsToRecord: (recordId: string, participant: user) => void;
   recordId: string;
 }
 
-const TakeAttendance = ({
-  hideTakeAttendance,
-  addParticipantsToRecord,
-  recordId,
-}: props) => {
+const TakeAttendance = ({ hideTakeAttendance, recordId }: props) => {
   const [participant, setParticipant] = useState("");
   const [displaySigninMessage, setDisplaySignInMessage] = useState(false);
+
+  const addParticipantsToRecord = useAttendanceStore(
+    (store) => store.addParticipantsToRecord
+  );
 
   const signAttendance = useCallback(() => {
     if (participant) {
